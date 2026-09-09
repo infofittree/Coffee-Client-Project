@@ -10,7 +10,6 @@ const footerLinks = {
   Heritage: [
     { label: 'Our Story (Since 1984)', href: '#heritage' },
     { label: 'The Origin Terroirs', href: '#statement' },
-    { label: '3D Sensory Studio', href: '#showcase-3d' },
     { label: 'Decoction Brew Guide', href: '#brewing' },
   ],
   Commercial: [

@@ -6,7 +6,6 @@ import { useCart } from '../../context/CartContext';
 const navLinks = [
   { label: 'Heritage', href: '#heritage' },
   { label: 'Collection', href: '#products' },
-  { label: '3D Studio', href: '#showcase-3d' },
   { label: 'Brewing', href: '#brewing' },
   { label: 'Wholesale', href: '#wholesale' },
 ];
