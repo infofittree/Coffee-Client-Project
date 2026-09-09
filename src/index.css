@@ -1,0 +1,105 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+    background-color: #0B0607;
+  }
+
+  body {
+    background-color: #0B0607;
+    color: #FAF8F5;
+    min-height: 100vh;
+    font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  ::selection {
+    background-color: rgba(197, 160, 89, 0.35);
+    color: #FFFDF9;
+  }
+
+  /* Architectural Minimal Scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #120A0C;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #3A251D;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #C5A059;
+  }
+}
+
+@layer components {
+  /* Subtle Paper Grain for Warm Editorial Sections */
+  .paper-grain {
+    background-image: radial-gradient(rgba(0, 0, 0, 0.04) 1px, transparent 1px);
+    background-size: 16px 16px;
+  }
+
+  /* Dark Linen Texture */
+  .dark-grain {
+    background-image: radial-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    background-size: 20px 20px;
+  }
+
+  /* Hairline Dividers */
+  .hairline-b {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+  .hairline-t {
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+  }
+  .hairline-light-b {
+    border-bottom: 1px solid rgba(18, 10, 12, 0.08);
+  }
+  .hairline-light-t {
+    border-top: 1px solid rgba(18, 10, 12, 0.08);
+  }
+  .hairline-dark-t {
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+  }
+  .hairline-dark-b {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  }
+
+  /* Luxury Tactile Buttons */
+  .btn-brass {
+    @apply inline-flex items-center justify-center gap-2.5 px-8 py-3.5 text-xs font-body font-semibold tracking-wider uppercase
+           bg-gold-brass text-espresso-950 rounded-[2px] transition-all duration-300
+           hover:bg-gold-light active:scale-[0.98];
+  }
+
+  .btn-outline-brass {
+    @apply inline-flex items-center justify-center gap-2.5 px-8 py-3.5 text-xs font-body font-semibold tracking-wider uppercase
+           border border-gold-brass/40 text-gold-brass bg-transparent rounded-[2px] transition-all duration-300
+           hover:border-gold-brass hover:bg-gold-brass/10 active:scale-[0.98];
+  }
+
+  .btn-dark {
+    @apply inline-flex items-center justify-center gap-2.5 px-8 py-3.5 text-xs font-body font-semibold tracking-wider uppercase
+           bg-espresso-900 text-cream rounded-[2px] transition-all duration-300
+           hover:bg-espresso-800 active:scale-[0.98];
+  }
+
+  .btn-link-editorial {
+    @apply inline-flex items-center gap-2 text-xs font-semibold tracking-wider uppercase text-gold-brass
+           hover:text-gold-light transition-colors group;
+  }
+
+  /* Editorial Typography Accents */
+  .text-serif-foil {
+    background: linear-gradient(135deg, #F5E5C4 0%, #DFB76C 50%, #B88E3E 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+}

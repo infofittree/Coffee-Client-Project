@@ -1,0 +1,17 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+
+# Test screenshots & reference images
+before-enhancement.png
+enhanced-ui.png
+final-enhancement.png
+hero-restored.png
+test-bean-scale.png
+test-screenshot.png
+/Images/
+
+# Misc
+brain.md

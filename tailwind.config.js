@@ -1,0 +1,93 @@
+/** @type {import('tailwindcss').Config} */
+export default {
+  content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
+  theme: {
+    extend: {
+      colors: {
+        espresso: {
+          50: '#FAF8F5',
+          100: '#F4EFEA',
+          200: '#E8DFD5',
+          300: '#D5C4B3',
+          400: '#9E8168',
+          500: '#6B4E36',
+          600: '#422E1F',
+          700: '#2C1B14',
+          800: '#1C1012',
+          900: '#120A0C',
+          950: '#0B0607',
+        },
+        cream: {
+          50: '#FFFFFF',
+          100: '#FBF9F5',
+          200: '#F5EFE6',
+          300: '#ECE3D5',
+          400: '#DFD2C0',
+          DEFAULT: '#FBF9F5',
+          parchment: '#F4EDE2',
+        },
+        forest: {
+          50: '#F0F5F2',
+          100: '#DCE8E1',
+          200: '#BCD3C5',
+          300: '#94B8A2',
+          700: '#2A4D39',
+          800: '#1C3627',
+          900: '#11231A',
+          950: '#09150F',
+          DEFAULT: '#11231A',
+        },
+        sage: {
+          200: '#D2DFD6',
+          300: '#AAC2B2',
+          400: '#84A690',
+          500: '#5F856D',
+        },
+        gold: {
+          brass: '#C5A059',
+          DEFAULT: '#D4AF37',
+          dark: '#B38F2B',
+          light: '#E6C875',
+          foil: '#DFB76C',
+        },
+        amber: {
+          DEFAULT: '#E06D38',
+          dark: '#B84D1C',
+          light: '#F28B57',
+        },
+        caramel: {
+          DEFAULT: '#D6A265',
+          dark: '#B88243',
+          light: '#E8C69D',
+        },
+      },
+      fontFamily: {
+        display: ['"Playfair Display"', 'Georgia', 'serif'],
+        body: ['"Inter"', 'system-ui', '-apple-system', 'sans-serif'],
+        mono: ['ui-monospace', 'SFMono-Regular', 'Menlo', 'monospace'],
+      },
+      letterSpacing: {
+        tighter: '-0.035em',
+        tight: '-0.02em',
+        normal: '0',
+        wide: '0.04em',
+        wider: '0.12em',
+        widest: '0.22em',
+        editorial: '0.3em',
+      },
+      lineHeight: {
+        tightest: '0.92',
+        snugger: '1.05',
+      },
+      borderRadius: {
+        none: '0',
+        xs: '2px',
+        sm: '4px',
+        md: '6px',
+        lg: '8px',
+        xl: '12px',
+      },
+    },
+  },
+  plugins: [],
+};
