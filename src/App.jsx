@@ -5,7 +5,6 @@ import Navbar from './components/layout/Navbar';
 import HeroSection from './components/sections/HeroSection';
 import ScrollRevealStatement from './components/sections/ScrollRevealStatement';
 import HeritageSection from './components/sections/HeritageSection';
-import ProductShowcase3D from './components/sections/ProductShowcase3D';
 import ProductCatalog from './components/sections/ProductCatalog';
 import BrewingGuide from './components/sections/BrewingGuide';
 import TestimonialsSection from './components/sections/TestimonialsSection';
@@ -41,7 +40,6 @@ export default function App() {
           <HeroSection />
           <ScrollRevealStatement />
           <HeritageSection />
-          <ProductShowcase3D />
           <ProductCatalog />
           <BrewingGuide />
           <TestimonialsSection />
