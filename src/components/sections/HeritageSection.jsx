@@ -75,16 +75,16 @@ export default function HeritageSection() {
           </div>
         </div>
 
-        {/* Large Cinematic Photographic Moment: Western Ghats Plantation */}
+        {/* Large Cinematic Photographic Moment: Terroir Heritage */}
         <div className="py-20">
-          <div className="relative aspect-[16/8] sm:aspect-[21/9] w-full overflow-hidden rounded-sm shadow-md bg-espresso-900">
+          <div className="relative aspect-[16/9] sm:aspect-[21/10] w-full overflow-hidden rounded-sm shadow-md bg-espresso-900">
             <img
-              src="https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=1800&q=85"
-              alt="Misty Western Ghats shade-grown coffee plantation in Coorg and Chikmagalur"
-              className="w-full h-full object-cover filter brightness-[0.92] contrast-[1.05]"
+              src="/images/heritage-brew.webp"
+              alt="Authentic South Indian artisanal filter coffee poured in traditional brass davara tumbler"
+              className="w-full h-full object-cover object-center filter brightness-[0.88] contrast-[1.05]"
               loading="lazy"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-espresso-950/70 via-transparent to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-espresso-950/85 via-espresso-950/35 to-transparent" />
             <div className="absolute bottom-6 left-6 sm:bottom-10 sm:left-10 text-cream max-w-lg">
               <span className="text-[10px] uppercase tracking-editorial font-semibold text-gold-brass block mb-1">
                 The Terroir
