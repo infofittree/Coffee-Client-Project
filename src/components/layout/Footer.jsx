@@ -58,7 +58,7 @@ export default function Footer() {
             <div className="flex items-center gap-3">
               <div className="h-10 w-14 rounded-xs overflow-hidden flex items-center justify-center">
                 <img
-                  src="/images/logo.jpeg"
+                  src="/images/logo.png"
                   alt="Brown Label Coffee Since 1984"
                   className="h-full w-full object-contain p-0.5"
                 />

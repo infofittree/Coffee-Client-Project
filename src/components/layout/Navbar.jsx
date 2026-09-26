@@ -37,7 +37,7 @@ export default function Navbar({ onCartOpen, hasAnnouncement = true }) {
           <a href="#home" className="flex items-center gap-3.5 group" aria-label="Brown Label Coffee Homepage">
             <div className="h-9 w-12 overflow-hidden flex items-center justify-center">
               <img
-                src="/images/logo.jpeg"
+                src="/images/logo.png"
                 alt="Brown Label Coffee"
                 className="h-full w-full object-contain filter brightness-95 group-hover:brightness-105 transition-all"
               />

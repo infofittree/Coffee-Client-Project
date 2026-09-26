@@ -355,7 +355,7 @@ export default function AdminDashboard({ onExit }) {
           <div className="flex items-center gap-3.5">
             <div className="h-10 w-14 rounded-xs overflow-hidden flex items-center justify-center p-0.5">
               <img
-                src="/images/logo.jpeg"
+                src="/images/logo.png"
                 alt="Brown Label Roastery"
                 className="h-full w-full object-contain"
               />
