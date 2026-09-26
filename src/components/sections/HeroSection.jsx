@@ -5,7 +5,7 @@ import ScrollCoffeeBean from '../3d/ScrollCoffeeBean';
 import FloatingBeansParticles from '../3d/FloatingBeansParticles';
 
 const stats = [
-  { value: '40+', label: 'Years of Craft' },
+  { value: '43 Years', label: 'Roastery Legacy' },
   { value: '50K+', label: 'Happy Customers' },
   { value: '100%', label: 'Natural Beans' },
   { value: '210°C', label: 'Precision Roasting' },
@@ -31,7 +31,7 @@ export default function HeroSection() {
             <div className="flex items-center gap-3 mb-6">
               <span className="w-6 h-px bg-gold-brass" />
               <span className="text-[11px] uppercase tracking-editorial font-body font-semibold text-gold-brass">
-                Since 1984 &nbsp;·&nbsp; Bengaluru
+                Since 1984 &nbsp;·&nbsp; 43 Years of Craft &nbsp;·&nbsp; Bengaluru
               </span>
             </div>
 
@@ -49,7 +49,7 @@ export default function HeroSection() {
 
             {/* Description */}
             <p className="text-cream/70 text-base sm:text-lg max-w-lg mb-10 leading-relaxed font-light">
-              Four decades of artisanal roasting excellence. Hand-selected Arabica and Robusta beans from the shade-grown estates of Coorg, Chikmagalur, and Wayanad — roasted to order in Bengaluru for the timeless filter decoction.
+              43 years of artisanal roasting excellence. Hand-selected Arabica and Robusta beans from the shade-grown estates of Coorg and Chikmagalur — roasted to order in Bengaluru for the timeless filter decoction.
             </p>
 
             {/* Differentiated CTAs */}

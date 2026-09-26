@@ -71,14 +71,14 @@ export const products = [
 
 export const trustBadges = [
   { icon: 'Leaf', label: '100% Natural' },
-  { icon: 'Award', label: 'Since 1984' },
+  { icon: 'Award', label: '43 Years of Heritage' },
   { icon: 'Coffee', label: 'Arabica & Robusta' },
   { icon: 'Truck', label: 'Pan-India Shipping' },
   { icon: 'Shield', label: 'FSSAI Certified' },
 ];
 
 export const heroStats = [
-  { value: '40+', label: 'Years of Legacy' },
+  { value: '43 Years', label: 'Roastery Legacy' },
   { value: '50K+', label: 'Happy Customers' },
   { value: '100%', label: 'Natural Beans' },
   { value: '4.8★', label: 'Customer Rating' },

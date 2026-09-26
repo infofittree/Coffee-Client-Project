@@ -18,7 +18,7 @@ export default function ScrollRevealStatement() {
         </blockquote>
 
         {/* Origin Terroir Lineage */}
-        <div className="flex flex-wrap items-center justify-center gap-6 sm:gap-12 pt-6 border-t border-espresso-950/10 max-w-2xl mx-auto">
+        <div className="flex flex-wrap items-center justify-center gap-8 sm:gap-16 pt-6 border-t border-espresso-950/10 max-w-xl mx-auto">
           <div className="text-center">
             <span className="block font-display text-lg font-bold text-espresso-900">Coorg</span>
             <span className="text-[10px] uppercase tracking-widest text-espresso-500">1,200m Elevation</span>
@@ -27,11 +27,6 @@ export default function ScrollRevealStatement() {
           <div className="text-center">
             <span className="block font-display text-lg font-bold text-espresso-900">Chikmagalur</span>
             <span className="text-[10px] uppercase tracking-widest text-espresso-500">Baba Budan Hills</span>
-          </div>
-          <span className="text-gold-brass text-lg">·</span>
-          <div className="text-center">
-            <span className="block font-display text-lg font-bold text-espresso-900">Wayanad</span>
-            <span className="text-[10px] uppercase tracking-widest text-espresso-500">Highland Robusta</span>
           </div>
         </div>
       </div>

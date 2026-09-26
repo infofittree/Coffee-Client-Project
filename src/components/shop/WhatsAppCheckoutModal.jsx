@@ -2,9 +2,11 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { X, MessageCircle, Copy, ExternalLink, Check } from 'lucide-react';
 import { useState } from 'react';
 import { useCart } from '../../context/CartContext';
+import { useAdminData } from '../../context/AdminDataContext';
 
 export default function WhatsAppCheckoutModal({ isOpen, onClose }) {
   const { cart, totalPrice } = useCart();
+  const { addOrder } = useAdminData();
   const [copied, setCopied] = useState(false);
 
   const phoneNumber = '918026684573';
@@ -18,7 +20,26 @@ export default function WhatsAppCheckoutModal({ isOpen, onClose }) {
 
   const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
 
+  const handleSendOrder = () => {
+    if (addOrder && cart.length > 0) {
+      addOrder({
+        customerName: 'Online Web Customer',
+        phone: '+91 (WhatsApp Web)',
+        location: 'Storefront Direct',
+        items: cart.map((item) => ({
+          name: `${item.name} — ${item.variant}`,
+          size: item.size,
+          quantity: item.quantity,
+          price: item.price,
+        })),
+        totalPrice: totalPrice,
+        status: 'Pending',
+      });
+    }
+  };
+
   const handleCopy = () => {
+    handleSendOrder();
     navigator.clipboard.writeText(message);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
@@ -73,6 +94,7 @@ export default function WhatsAppCheckoutModal({ isOpen, onClose }) {
               <div className="mt-6 space-y-3">
                 <a
                   href={whatsappUrl}
+                  onClick={handleSendOrder}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-full bg-gradient-to-r from-emerald-600 to-emerald-500 hover:from-emerald-500 hover:to-emerald-400 text-white font-bold py-3.5 px-6 rounded-full flex items-center justify-center gap-2 transition-all shadow-luxury-forest text-xs uppercase tracking-wider"

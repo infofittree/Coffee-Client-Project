@@ -1,8 +1,10 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Send, CheckCircle2, Shield, Truck, Sparkles } from 'lucide-react';
+import { useAdminData } from '../../context/AdminDataContext';
 
 export default function WholesaleB2BSection() {
+  const { addInquiry } = useAdminData();
   const [submitted, setSubmitted] = useState(false);
   const [formData, setFormData] = useState({
     businessName: '',
@@ -16,6 +18,17 @@ export default function WholesaleB2BSection() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (addInquiry) {
+      addInquiry({
+        businessName: formData.businessName,
+        contactName: formData.contactName,
+        email: formData.email,
+        phone: formData.phone,
+        type: formData.type,
+        volume: formData.volume,
+        notes: formData.notes,
+      });
+    }
     setSubmitted(true);
     setTimeout(() => setSubmitted(false), 6000);
   };

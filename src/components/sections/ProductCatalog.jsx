@@ -1,12 +1,13 @@
 import { useState } from 'react';
 import { ShoppingBag, Check } from 'lucide-react';
-import { products } from '../../data/products';
+import { products as fallbackProducts } from '../../data/products';
 import { useCart } from '../../context/CartContext';
+import { useAdminData } from '../../context/AdminDataContext';
 
 function CollectionCard({ product, index }) {
   const { addItem } = useCart();
-  const sizes = Object.keys(product.prices);
-  const [selectedSize, setSelectedSize] = useState(sizes[0]);
+  const sizes = Object.keys(product.prices || { '500g': 499 });
+  const [selectedSize, setSelectedSize] = useState(sizes[0] || '500g');
   const [added, setAdded] = useState(false);
 
   const handleAdd = (e) => {
@@ -16,6 +17,8 @@ function CollectionCard({ product, index }) {
     setTimeout(() => setAdded(false), 1600);
   };
 
+  const imageSrc = product.image || '/images/roasted-beans.jpeg';
+
   return (
     <div className="group flex flex-col bg-cream-50 border border-espresso-950/10 rounded-xs overflow-hidden transition-all duration-300 hover:shadow-lg">
       {/* Product Image Stage (65% of card visual area) */}
@@ -23,17 +26,17 @@ function CollectionCard({ product, index }) {
         {/* Soft Radial Backlight tailored to blend */}
         <div
           className="absolute inset-0 opacity-20 group-hover:opacity-35 transition-opacity blur-2xl pointer-events-none"
-          style={{ background: `radial-gradient(circle, ${product.colorPrimary} 0%, transparent 70%)` }}
+          style={{ background: `radial-gradient(circle, ${product.colorPrimary || '#D6A265'} 0%, transparent 70%)` }}
         />
 
         {/* Edition Number / Badge */}
         <span className="absolute top-5 left-5 text-[10px] font-mono uppercase tracking-widest text-cream/50 z-10">
-          0{index + 1} &nbsp;/&nbsp; {product.badge}
+          0{index + 1} &nbsp;/&nbsp; {product.badge || 'Roastery Blend'}
         </span>
 
         {/* Authentic Product Photography */}
         <img
-          src={product.image}
+          src={imageSrc}
           alt={`${product.name} — ${product.variant}`}
           className="h-full w-full object-contain filter drop-shadow-[0_20px_30px_rgba(0,0,0,0.7)] group-hover:scale-105 transition-transform duration-700 relative z-10"
           loading="eager"
@@ -42,7 +45,7 @@ function CollectionCard({ product, index }) {
         {/* Subtle Accent Stripe at Bottom of Image Stage */}
         <div
           className="absolute bottom-0 inset-x-0 h-1"
-          style={{ backgroundColor: product.colorPrimary }}
+          style={{ backgroundColor: product.colorPrimary || '#D6A265' }}
         />
       </div>
 
@@ -125,6 +128,9 @@ function CollectionCard({ product, index }) {
 }
 
 export default function ProductCatalog() {
+  const adminData = useAdminData();
+  const catalogProducts = adminData?.products || fallbackProducts;
+
   return (
     <section id="products" className="py-28 sm:py-36 bg-cream text-espresso-950 relative overflow-hidden paper-grain hairline-light-t hairline-light-b">
       <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 relative z-10">
@@ -145,7 +151,7 @@ export default function ProductCatalog() {
 
         {/* 4-Column Product Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-          {products.map((product, index) => (
+          {catalogProducts.map((product, index) => (
             <CollectionCard key={product.id} product={product} index={index} />
           ))}
         </div>

@@ -19,15 +19,6 @@ const origins = [
       'Ripened under two-tier forest canopies of native rosewood and wild fig. The slow maturation infuses the beans with dense chocolate undertones, roasted almonds, and heavy crema body.',
     accent: '#84A690',
   },
-  {
-    name: 'Wayanad',
-    title: 'Highland Robusta Heartland',
-    elevation: '750m – 1,050m',
-    hills: 'Western Ghats Ridge',
-    description:
-      'Monsoon-drenched slopes produce bold, washed Robustas with velvety chocolate viscosity that cuts through hot boiled milk for the authentic South Indian filter decoction.',
-    accent: '#A47E53',
-  },
 ];
 
 export default function HeritageSection() {
@@ -36,14 +27,14 @@ export default function HeritageSection() {
       <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
         {/* Top Editorial Magazine Spread */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start pb-20 hairline-light-b">
-          {/* Left Dominant Typography: 40 YEARS */}
+          {/* Left Dominant Typography: 43 YEARS */}
           <div className="lg:col-span-6">
             <span className="text-[11px] uppercase tracking-editorial font-body font-semibold text-espresso-500 block mb-3">
               The Bengaluru Roastery · Est. 1984
             </span>
             <div className="font-display leading-[0.88] tracking-tighter text-espresso-900 select-none">
               <span className="block text-7xl sm:text-9xl lg:text-[10.5rem] font-bold">
-                40
+                43
               </span>
               <span className="block text-3xl sm:text-5xl lg:text-6xl font-normal italic text-gold-brass font-display mt-2">
                 Years of Mastery.
@@ -54,11 +45,11 @@ export default function HeritageSection() {
           {/* Right Narrative Story Block */}
           <div className="lg:col-span-6 pt-4 lg:pt-8">
             <h2 className="font-display text-2xl sm:text-3xl lg:text-4xl font-normal text-espresso-900 mb-6 leading-snug">
-              “Coffee with Difference” is not a slogan. It is forty years of thermal discipline.
+              “Coffee with Difference” is not a slogan. It is 43 years of thermal discipline.
             </h2>
             <div className="space-y-5 text-espresso-700 text-sm sm:text-base leading-relaxed font-light">
               <p>
-                Founded in 1984 on Bannerghatta Road in Bengaluru, Brown Label Coffee was born out of a refusal to compromise on South Indian filter coffee. While mass markets turned to automated bulk roasting and excessive chicory fillers, our master roasters preserved the delicate art of drum roasting.
+                Founded in 1984 on Bannerghatta Road in Bengaluru, Brown Label Coffee has spent 43 continuous years mastering South Indian filter coffee. While mass markets turned to automated bulk roasting and excessive chicory fillers, our master roasters preserved the delicate art of drum roasting.
               </p>
               <p>
                 Every single batch is calibrated by ambient monsoon humidity and bean density. By slowly caramelizing the natural bean sugars at a controlled 210°C, we capture the heavy body and sweet chocolate aroma that defines the iconic South Indian morning cup.
@@ -105,18 +96,18 @@ export default function HeritageSection() {
           </div>
         </div>
 
-        {/* Supporting Terroir Origin Spread (3-Column Magazine Columns) */}
+        {/* Supporting Terroir Origin Spread (2-Column Magazine Columns) */}
         <div>
           <div className="flex items-center justify-between mb-10 pb-4 hairline-light-b">
             <span className="text-xs uppercase tracking-editorial font-bold text-espresso-500">
-              The Three Origins
+              The Heritage Origins
             </span>
             <span className="text-xs font-mono text-espresso-500">
-              Western Ghats Biosphere · 11°N – 13°N
+              Western Ghats Biosphere · 12°N – 13°N
             </span>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-10 lg:gap-14">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-10 lg:gap-16">
             {origins.map((origin) => (
               <div key={origin.name} className="flex flex-col justify-between">
                 <div>

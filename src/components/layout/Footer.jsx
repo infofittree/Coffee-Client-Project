@@ -16,7 +16,7 @@ const footerLinks = {
     { label: 'HoReCa & Cafe Supply', href: '#wholesale' },
     { label: 'Custom Extraction Profiling', href: '#wholesale' },
     { label: 'Pan-India Scheduled Logistics', href: '#wholesale' },
-    { label: 'Commercial Sample Kit', href: '#wholesale' },
+    { label: 'Roastery Operations Portal', href: '#admin' },
   ],
   Assurance: [
     { label: 'FSSAI Lic: 11214334000045', href: '#contact' },
@@ -36,7 +36,7 @@ export default function Footer() {
         {/* Massive Editorial Brand Statement */}
         <div className="pb-16 sm:pb-24 border-b border-white/10">
           <span className="text-[10px] uppercase font-mono tracking-widest text-gold-brass block mb-4">
-            The Master Roasters of Bengaluru · Est. 1984
+            The Master Roasters of Bengaluru · 43 Years of Heritage (Est. 1984)
           </span>
           <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8">
             <h2 className="font-display text-4xl sm:text-6xl lg:text-7xl font-light tracking-tight text-cream/90 leading-[1.05]">
@@ -45,7 +45,7 @@ export default function Footer() {
             </h2>
             <div className="max-w-sm">
               <p className="text-xs sm:text-sm text-cream/60 leading-relaxed font-body">
-                Four decades of roasting mastery, preserving South Indian coffee heritage with unyielding fidelity to estate origin, timing, and craft.
+                43 years of roasting mastery, preserving South Indian coffee heritage with unyielding fidelity to estate origin, timing, and craft.
               </p>
             </div>
           </div>
@@ -56,7 +56,7 @@ export default function Footer() {
           {/* Brand & Roastery Column (2 cols on lg) */}
           <div className="col-span-2 md:col-span-4 lg:col-span-2 space-y-6">
             <div className="flex items-center gap-3">
-              <div className="h-10 w-14 rounded-xs overflow-hidden bg-espresso-900 border border-white/15 flex items-center justify-center">
+              <div className="h-10 w-14 rounded-xs overflow-hidden flex items-center justify-center">
                 <img
                   src="/images/logo.jpeg"
                   alt="Brown Label Coffee Since 1984"
@@ -74,7 +74,7 @@ export default function Footer() {
             </div>
 
             <p className="text-cream/60 text-xs leading-relaxed max-w-sm font-body">
-              Estate-sourced Arabica and Robusta beans from Coorg, Chikmagalur, and Wayanad. Roasted in small artisanal batches to peak aromatic depth.
+              Estate-sourced Arabica and Robusta beans from Coorg and Chikmagalur. Roasted in small artisanal batches to peak aromatic depth.
             </p>
 
             <div className="space-y-2.5 text-xs text-cream/65 pt-1">
@@ -171,7 +171,16 @@ export default function Footer() {
         {/* Bottom Copyright */}
         <div className="pt-6 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between gap-2 text-[11px] text-cream/40 font-mono">
           <span>© {new Date().getFullYear()} Brown Label Coffee Private Limited. All rights reserved.</span>
-          <span>Crafted with difference in Bengaluru.</span>
+          <div className="flex items-center gap-3">
+            <span>Crafted with difference in Bengaluru.</span>
+            <span>·</span>
+            <a
+              href="#admin"
+              className="text-gold-brass/60 hover:text-gold-brass transition-colors uppercase tracking-wider font-semibold"
+            >
+              Roastery Portal ↗
+            </a>
+          </div>
         </div>
       </div>
     </footer>

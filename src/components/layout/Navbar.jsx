@@ -35,7 +35,7 @@ export default function Navbar({ onCartOpen, hasAnnouncement = true }) {
         <div className="flex items-center justify-between">
           {/* Brand Wordmark & Identity */}
           <a href="#home" className="flex items-center gap-3.5 group" aria-label="Brown Label Coffee Homepage">
-            <div className="h-9 w-12 overflow-hidden bg-espresso-900 border border-white/10 rounded-xs flex items-center justify-center p-0.5">
+            <div className="h-9 w-12 overflow-hidden flex items-center justify-center">
               <img
                 src="/images/logo.jpeg"
                 alt="Brown Label Coffee"
@@ -47,7 +47,7 @@ export default function Navbar({ onCartOpen, hasAnnouncement = true }) {
                 BROWN LABEL
               </span>
               <span className="block text-[9px] tracking-editorial text-cream/40 uppercase font-body mt-0.5">
-                Bengaluru · Since 1984
+                Bengaluru · 43 Years of Heritage
               </span>
             </div>
           </a>
