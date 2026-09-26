@@ -1,71 +1,7 @@
 import { useRef, useState, useEffect, useMemo } from 'react';
 import { useFrame } from '@react-three/fiber';
-import * as THREE from 'three';
 import { Float } from '@react-three/drei';
-
-// Custom shader material for authentic photorealistic coffee bean point splats
-const createSplatMaterial = () => {
-  return new THREE.ShaderMaterial({
-    uniforms: {
-      uPointScale: { value: 36.0 },
-      uLightDir: { value: new THREE.Vector3(0.55, 0.85, 0.65).normalize() },
-      uLightColor: { value: new THREE.Color('#FFF5E6') },
-      uAmbient: { value: 0.52 },
-    },
-    vertexShader: `
-      attribute vec3 color;
-      varying vec3 vColor;
-      varying vec3 vNormal;
-      varying vec3 vViewPosition;
-      uniform float uPointScale;
-
-      void main() {
-        vColor = color;
-        vNormal = normalize(normalMatrix * normal);
-        vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
-        vViewPosition = -mvPosition.xyz;
-        gl_Position = projectionMatrix * mvPosition;
-        // Distance-based size attenuation
-        gl_PointSize = uPointScale * (1.0 / -mvPosition.z);
-      }
-    `,
-    fragmentShader: `
-      varying vec3 vColor;
-      varying vec3 vNormal;
-      varying vec3 vViewPosition;
-      uniform vec3 uLightDir;
-      uniform vec3 uLightColor;
-      uniform float uAmbient;
-
-      void main() {
-        // Soft circular disc
-        vec2 coord = gl_PointCoord - vec2(0.5);
-        float dist = length(coord);
-        if (dist > 0.5) discard;
-        float alpha = smoothstep(0.5, 0.35, dist);
-
-        vec3 N = normalize(vNormal);
-        vec3 L = normalize(uLightDir);
-        vec3 L2 = normalize(vec3(-0.6, 0.3, 0.75));
-        vec3 V = normalize(vViewPosition);
-        vec3 H = normalize(L + V);
-
-        // Key + fill lighting with authentic scanned color
-        float diff1 = max(dot(N, L), 0.0);
-        float diff2 = max(dot(N, L2), 0.0);
-        vec3 diffuse = vColor * (uAmbient + diff1 * 0.65 * uLightColor + diff2 * 0.35 * vec3(0.95, 0.85, 0.75));
-
-        // Specular roast shine (oily coffee bean highlight)
-        float spec = pow(max(dot(N, H), 0.0), 22.0);
-        vec3 specular = vec3(0.95, 0.85, 0.65) * spec * 0.3;
-
-        gl_FragColor = vec4(diffuse + specular, alpha);
-      }
-    `,
-    transparent: true,
-    depthWrite: true,
-  });
-};
+import { getCoffeeBeanGeometry, createSplatMaterial } from './coffeeBeanModel';
 
 export default function ScrollCoffeeBean() {
   const groupRef = useRef();
@@ -73,44 +9,17 @@ export default function ScrollCoffeeBean() {
   const scrollRef = useRef(0);
   const [geometry, setGeometry] = useState(null);
 
-  // Load the authentic 3D coffee bean model from binary buffer
+  // Load the authentic 3D coffee bean model from shared singleton cache
   useEffect(() => {
     let active = true;
 
-    async function loadModel() {
-      try {
-        const res = await fetch('/models/coffee-bean-data.bin');
-        if (!res.ok) throw new Error('Failed to load binary model');
-        const buffer = await res.arrayBuffer();
-
-        const dv = new DataView(buffer);
-        const vertexCount = dv.getUint32(0, true);
-
-        const posOffset = 4;
-        const normOffset = 4 + (vertexCount * 3 * 4);
-        const colOffset = 4 + (vertexCount * 3 * 4) + (vertexCount * 3 * 4);
-
-        const positions = new Float32Array(buffer, posOffset, vertexCount * 3);
-        const normals = new Float32Array(buffer, normOffset, vertexCount * 3);
-        const rawColors = new Uint8Array(buffer, colOffset, vertexCount * 3);
-
-        const colors = new Float32Array(vertexCount * 3);
-        for (let i = 0; i < vertexCount * 3; i++) {
-          colors[i] = rawColors[i] / 255.0;
-        }
-
-        const geo = new THREE.BufferGeometry();
-        geo.setAttribute('position', new THREE.BufferAttribute(new Float32Array(positions), 3));
-        geo.setAttribute('normal', new THREE.BufferAttribute(new Float32Array(normals), 3));
-        geo.setAttribute('color', new THREE.BufferAttribute(colors, 3));
-
+    getCoffeeBeanGeometry()
+      .then((geo) => {
         if (active) setGeometry(geo);
-      } catch {
-        // Silent fallback — geometry stays null, component renders nothing
-      }
-    }
-
-    loadModel();
+      })
+      .catch(() => {
+        // Fallback silently if asset cannot be fetched
+      });
 
     let scrollTicking = false;
     let mouseTicking = false;
@@ -147,22 +56,23 @@ export default function ScrollCoffeeBean() {
     };
   }, []);
 
-  const material = useMemo(() => createSplatMaterial(), []);
+  const material = useMemo(() => createSplatMaterial({ pointScale: 36.0 }), []);
 
   useEffect(() => {
     return () => {
-      if (geometry) geometry.dispose();
       material.dispose();
     };
-  }, [geometry, material]);
+  }, [material]);
 
   useFrame((state) => {
     if (!groupRef.current) return;
     const scroll = scrollRef.current;
     const time = state.clock.elapsedTime;
 
-    // Full 360° scroll-driven rotation + ambient floating rotation
-    groupRef.current.rotation.y = scroll * 0.0035 + time * 0.22;
+    // Full 360° rotation speed increased by 20%:
+    // Ambient continuous spin: 0.22 * 1.2 = 0.264
+    // Scroll-driven spin: 0.0035 * 1.2 = 0.0042
+    groupRef.current.rotation.y = scroll * 0.0042 + time * 0.264;
     groupRef.current.rotation.x = 0.2 + Math.sin(scroll * 0.001) * 0.35 + mouseRef.current.y * 0.18;
     groupRef.current.rotation.z = Math.cos(time * 0.4) * 0.07 + mouseRef.current.x * 0.12;
 
