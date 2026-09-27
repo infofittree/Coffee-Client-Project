@@ -2,6 +2,7 @@ import { motion } from 'framer-motion';
 import { ArrowRight, ArrowDown } from 'lucide-react';
 import SceneContainer from '../3d/SceneContainer';
 import ScrollCoffeeBean from '../3d/ScrollCoffeeBean';
+import FloatingBeansParticles from '../3d/FloatingBeansParticles';
 
 const stats = [
   { value: '43 Years', label: 'Roastery Legacy' },
@@ -73,6 +74,7 @@ export default function HeroSection() {
 
             <SceneContainer camera={{ position: [0, 0, 4.6], fov: 40 }}>
               <ScrollCoffeeBean />
+              <FloatingBeansParticles count={6} />
             </SceneContainer>
           </div>
         </div>

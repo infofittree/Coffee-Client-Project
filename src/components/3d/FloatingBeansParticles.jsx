@@ -5,60 +5,36 @@ import { getCoffeeBeanGeometry, createSplatMaterial } from './coffeeBeanModel';
 function SingleFloatingBean({
   geometry,
   material,
-  basePosition,
+  position,
   scale,
   rotationSpeed,
   floatSpeed,
-  floatAmplitude,
   initialRotation,
-  scrollParallaxSpeed,
-  scrollTracker,
 }) {
   const ref = useRef();
 
   useFrame((state) => {
     if (!ref.current) return;
     const time = state.clock.elapsedTime;
-    const scrollY = scrollTracker?.current || 0;
 
-    // Organic tumbling rotation across all 3 axes
+    // Organic tumbling rotation
     ref.current.rotation.x = initialRotation[0] + time * rotationSpeed[0];
     ref.current.rotation.y = initialRotation[1] + time * rotationSpeed[1];
     ref.current.rotation.z = initialRotation[2] + time * rotationSpeed[2];
 
-    // Compute vertical position with scroll parallax and continuous soft wraparound
-    // Viewport height in 3D units at z=0 with fov=45, distance=6 is ~5.0 units (-2.8 to +2.8)
-    const viewHeight = 5.6;
-    const halfH = viewHeight / 2;
-    const scrollOffset = scrollY * scrollParallaxSpeed;
-    const rawY = basePosition[1] + Math.sin(time * floatSpeed + initialRotation[0]) * floatAmplitude - scrollOffset;
-    
-    // Smooth wraparound in range [-halfH, +halfH]
-    const wrappedY = ((((rawY + halfH) % viewHeight) + viewHeight) % viewHeight) - halfH;
-
-    ref.current.position.y = wrappedY;
+    // Gentle vertical floating motion
+    ref.current.position.y = position[1] + Math.sin(time * floatSpeed + initialRotation[0]) * 0.22;
   });
 
   return (
-    <group ref={ref} position={basePosition} scale={scale}>
+    <group ref={ref} position={position} scale={scale}>
       <points geometry={geometry} material={material} />
     </group>
   );
 }
 
-export default function FloatingBeansParticles({ count = 14 }) {
+export default function FloatingBeansParticles({ count = 8 }) {
   const [geometry, setGeometry] = useState(null);
-  const scrollRef = useRef(0);
-
-  // Track window scroll with passive listener
-  useEffect(() => {
-    const handleScroll = () => {
-      scrollRef.current = window.scrollY;
-    };
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    handleScroll();
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
 
   useEffect(() => {
     let active = true;
@@ -73,13 +49,13 @@ export default function FloatingBeansParticles({ count = 14 }) {
     };
   }, []);
 
-  // Point material tuned for crisp, authentic roast presence across dark and light sections
+  // Softened point material specifically tuned for atmospheric background depth
   const material = useMemo(
     () =>
       createSplatMaterial({
-        pointScale: 28.0,
-        ambient: 0.72,
-        opacityMultiplier: 0.92,
+        pointScale: 26.0,
+        ambient: 0.65,
+        opacityMultiplier: 0.85,
       }),
     []
   );
@@ -90,43 +66,30 @@ export default function FloatingBeansParticles({ count = 14 }) {
     };
   }, [material]);
 
-  // Predefined full-viewport positions covering outer screen margins and Hero depth
+  // Pre-generate stable positions, scales, and rotation parameters for each bean
   const beans = useMemo(() => {
-    const fullPageCoordinates = [
-      // Left Outer Screen Gutter (pure margin framing)
-      { pos: [-4.6, 2.1, -1.0], scale: 0.32 },
-      { pos: [-4.4, 0.8, -0.8], scale: 0.34 },
-      { pos: [-4.6, -0.5, -1.1], scale: 0.30 },
-      { pos: [-4.3, -1.8, -0.9], scale: 0.34 },
-      { pos: [-4.5, 1.4, -1.3], scale: 0.28 },
-      { pos: [-4.4, -1.1, -1.2], scale: 0.30 },
-
-      // Right Outer Screen Gutter (pure margin framing)
-      { pos: [4.6, 2.1, -1.0], scale: 0.34 },
-      { pos: [4.4, 0.7, -0.8], scale: 0.36 },
-      { pos: [4.6, -0.6, -1.1], scale: 0.32 },
-      { pos: [4.3, -1.8, -0.9], scale: 0.34 },
-      { pos: [4.5, 1.5, -1.3], scale: 0.28 },
-      { pos: [4.4, -1.2, -1.2], scale: 0.30 },
-
-      // Atmospheric Depth on the right side around the Hero 3D bean
-      { pos: [2.6, 0.3, -1.8], scale: 0.32 },
-      { pos: [2.3, -0.9, -2.0], scale: 0.28 },
+    const predefinedPositions = [
+      [-1.35, 1.05, -0.6],
+      [1.30, 0.95, -0.8],
+      [-1.20, -1.0, -0.5],
+      [1.25, -0.9, -0.7],
+      [-0.75, 1.35, -1.1],
+      [0.85, -1.30, -0.9],
+      [-1.45, 0.1, -0.9],
+      [1.40, 0.2, -0.8],
     ];
 
-    return Array.from({ length: Math.min(count, fullPageCoordinates.length) }, (_, i) => {
-      const config = fullPageCoordinates[i];
+    return Array.from({ length: Math.min(count, predefinedPositions.length) }, (_, i) => {
+      const pos = predefinedPositions[i];
       return {
         id: i,
-        basePosition: config.pos,
-        scale: config.scale,
-        floatSpeed: 0.5 + (i % 4) * 0.12,
-        floatAmplitude: 0.18 + (i % 3) * 0.06,
-        scrollParallaxSpeed: 0.0018 + (i % 5) * 0.0006, // subtle parallax rate per layer depth
+        position: pos,
+        scale: 0.42 + (i % 3) * 0.08, // Scales between 0.42 and 0.58
+        floatSpeed: 0.6 + (i % 4) * 0.15,
         rotationSpeed: [
-          0.18 + (i % 3) * 0.07,
-          0.22 + (i % 4) * 0.06,
-          0.14 + (i % 2) * 0.05,
+          0.18 + (i % 3) * 0.08,
+          0.24 + (i % 4) * 0.06,
+          0.12 + (i % 2) * 0.05,
         ],
         initialRotation: [
           (i * 1.3) % Math.PI,
@@ -146,7 +109,6 @@ export default function FloatingBeansParticles({ count = 14 }) {
           key={bean.id}
           geometry={geometry}
           material={material}
-          scrollTracker={scrollRef}
           {...bean}
         />
       ))}

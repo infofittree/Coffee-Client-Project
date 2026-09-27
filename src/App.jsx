@@ -14,7 +14,6 @@ import Footer from './components/layout/Footer';
 import CartDrawer from './components/shop/CartDrawer';
 import WhatsAppCheckoutModal from './components/shop/WhatsAppCheckoutModal';
 import AdminDashboard from './components/admin/AdminDashboard';
-import FullPageFloatingBeans from './components/3d/FullPageFloatingBeans';
 
 export default function App() {
   const [isAdminView, setIsAdminView] = useState(() => {
@@ -48,10 +47,7 @@ export default function App() {
         {isAdminView ? (
           <AdminDashboard onExit={handleExitAdmin} />
         ) : (
-          <div className="min-h-screen bg-espresso-950 text-cream flex flex-col font-body selection:bg-gold/30 selection:text-white relative">
-            {/* Global Fixed Full-Page Floating 3D Coffee Beans Layer */}
-            <FullPageFloatingBeans />
-
+          <div className="min-h-screen bg-espresso-950 text-cream flex flex-col font-body selection:bg-gold/30 selection:text-white">
             {/* Top Announcement Bar */}
             <AnnouncementBar onDismiss={() => setHasAnnouncement(false)} />
 
