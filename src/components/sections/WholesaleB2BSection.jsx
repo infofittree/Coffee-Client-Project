@@ -1,11 +1,20 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Send, CheckCircle2, Shield, Truck, Sparkles } from 'lucide-react';
+import { Send, CheckCircle2, Shield, Truck, Sparkles, AlertCircle } from 'lucide-react';
 import { useAdminData } from '../../context/AdminDataContext';
+
+function sanitizeInput(str, maxLength = 100) {
+  if (typeof str !== 'string') return '';
+  return str
+    .replace(/[\x00-\x1F\x7F]/g, '') // Remove ASCII control characters
+    .trim()
+    .slice(0, maxLength);
+}
 
 export default function WholesaleB2BSection() {
   const { addInquiry } = useAdminData();
   const [submitted, setSubmitted] = useState(false);
+  const [validationError, setValidationError] = useState('');
   const [formData, setFormData] = useState({
     businessName: '',
     contactName: '',
@@ -18,23 +27,59 @@ export default function WholesaleB2BSection() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setValidationError('');
+
+    const cleanBusiness = sanitizeInput(formData.businessName, 120);
+    const cleanContact = sanitizeInput(formData.contactName, 100);
+    const cleanEmail = sanitizeInput(formData.email, 100);
+    const cleanPhone = sanitizeInput(formData.phone, 25);
+    const cleanNotes = formData.notes ? formData.notes.trim().slice(0, 1000) : '';
+
+    // Validate email
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(cleanEmail)) {
+      setValidationError('Please provide a valid business email address.');
+      return;
+    }
+
+    // Validate phone (at least 7 digits)
+    const phoneDigits = cleanPhone.replace(/\D/g, '');
+    if (phoneDigits.length < 7 || phoneDigits.length > 15) {
+      setValidationError('Please provide a valid commercial contact phone number.');
+      return;
+    }
+
     if (addInquiry) {
       addInquiry({
-        businessName: formData.businessName,
-        contactName: formData.contactName,
-        email: formData.email,
-        phone: formData.phone,
+        businessName: cleanBusiness,
+        contactName: cleanContact,
+        email: cleanEmail,
+        phone: cleanPhone,
         type: formData.type,
         volume: formData.volume,
-        notes: formData.notes,
+        notes: cleanNotes,
       });
     }
+
     setSubmitted(true);
-    setTimeout(() => setSubmitted(false), 6000);
+    setTimeout(() => {
+      setSubmitted(false);
+      setFormData({
+        businessName: '',
+        contactName: '',
+        email: '',
+        phone: '',
+        type: '',
+        volume: '',
+        notes: '',
+      });
+    }, 6000);
   };
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    if (validationError) setValidationError('');
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   return (
@@ -112,7 +157,9 @@ export default function WholesaleB2BSection() {
             <div className="p-5 bg-black/30 border border-white/10 rounded-sm flex items-center justify-between text-xs">
               <div>
                 <span className="block text-cream/40 uppercase tracking-widest text-[10px]">Commercial Desk Direct</span>
-                <span className="font-mono text-cream font-medium">080-2668 4573 / 74</span>
+                <a href="tel:08026684573" className="font-mono text-cream font-medium hover:text-gold-brass transition-colors">
+                  080-2668 4573 / 74
+                </a>
               </div>
               <div className="text-right">
                 <span className="block text-cream/40 uppercase tracking-widest text-[10px]">Roastery Location</span>
@@ -142,7 +189,7 @@ export default function WholesaleB2BSection() {
                   </div>
                 </motion.div>
               ) : (
-                <form onSubmit={handleSubmit} className="space-y-4">
+                <form onSubmit={handleSubmit} className="space-y-4" noValidate>
                   <div className="border-b border-white/10 pb-4 mb-5">
                     <span className="text-[10px] font-mono uppercase tracking-widest text-gold-brass block mb-1">
                       Direct Roastery Inquiry
@@ -152,6 +199,13 @@ export default function WholesaleB2BSection() {
                     </h3>
                   </div>
 
+                  {validationError && (
+                    <div className="p-3 bg-rose-500/10 border border-rose-500/30 rounded-xs flex items-center gap-2 text-rose-300 text-xs">
+                      <AlertCircle className="w-4 h-4 shrink-0" />
+                      <span>{validationError}</span>
+                    </div>
+                  )}
+
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                       <label className="block text-[10px] uppercase tracking-widest font-mono text-cream/60 mb-1.5">
@@ -159,6 +213,7 @@ export default function WholesaleB2BSection() {
                       </label>
                       <input
                         name="businessName"
+                        maxLength={120}
                         placeholder="e.g. Bangalore Heritage Cafe"
                         value={formData.businessName}
                         onChange={handleChange}
@@ -172,6 +227,7 @@ export default function WholesaleB2BSection() {
                       </label>
                       <input
                         name="contactName"
+                        maxLength={100}
                         placeholder="Full name & title"
                         value={formData.contactName}
                         onChange={handleChange}
@@ -189,6 +245,7 @@ export default function WholesaleB2BSection() {
                       <input
                         name="email"
                         type="email"
+                        maxLength={100}
                         placeholder="procurement@cafe.com"
                         value={formData.email}
                         onChange={handleChange}
@@ -203,6 +260,7 @@ export default function WholesaleB2BSection() {
                       <input
                         name="phone"
                         type="tel"
+                        maxLength={25}
                         placeholder="+91 98765 43210"
                         value={formData.phone}
                         onChange={handleChange}
@@ -259,6 +317,7 @@ export default function WholesaleB2BSection() {
                     </label>
                     <textarea
                       name="notes"
+                      maxLength={1000}
                       placeholder="e.g. Commercial South Indian Decoction urns, preference for Extra Strong roast profile, sample request for 2 Bangalore branches..."
                       value={formData.notes}
                       onChange={handleChange}

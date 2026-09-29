@@ -1,13 +1,52 @@
 import { createContext, useContext, useReducer, useEffect } from 'react';
+import { products } from '../data/products';
 
 const CartContext = createContext();
 
 const STORAGE_KEY = 'brownlabel-cart';
 
+// Authoritative sanitizer: never trust raw prices or sizes from localStorage
+function sanitizeAndHydrateCart(rawItems) {
+  if (!Array.isArray(rawItems)) return [];
+
+  const sanitized = [];
+
+  for (const item of rawItems) {
+    if (!item || typeof item !== 'object') continue;
+
+    const authoritativeProduct = products.find((p) => p.id === item.id);
+    if (!authoritativeProduct) continue;
+
+    // Verify size exists in authoritative catalog
+    const validSizes = Object.keys(authoritativeProduct.prices || {});
+    if (!validSizes.includes(item.size)) continue;
+
+    const authoritativePrice = authoritativeProduct.prices[item.size];
+    const safeQuantity =
+      Number.isInteger(item.quantity) && item.quantity > 0 && item.quantity <= 99
+        ? item.quantity
+        : 1;
+
+    sanitized.push({
+      id: authoritativeProduct.id,
+      name: authoritativeProduct.name,
+      variant: authoritativeProduct.variant,
+      size: item.size,
+      price: authoritativePrice, // Always authoritative
+      colorPrimary: authoritativeProduct.colorPrimary,
+      quantity: safeQuantity,
+    });
+  }
+
+  return sanitized;
+}
+
 function loadCart() {
   try {
     const saved = localStorage.getItem(STORAGE_KEY);
-    return saved ? JSON.parse(saved) : [];
+    if (!saved) return [];
+    const parsed = JSON.parse(saved);
+    return sanitizeAndHydrateCart(parsed);
   } catch {
     return [];
   }
@@ -22,7 +61,7 @@ function cartReducer(state, action) {
       if (existing) {
         return state.map((item) =>
           item.id === action.payload.id && item.size === action.payload.size
-            ? { ...item, quantity: item.quantity + 1 }
+            ? { ...item, quantity: Math.min(99, item.quantity + 1) }
             : item
         );
       }
@@ -36,7 +75,7 @@ function cartReducer(state, action) {
       return state
         .map((item) =>
           item.id === action.payload.id && item.size === action.payload.size
-            ? { ...item, quantity: Math.max(0, action.payload.quantity) }
+            ? { ...item, quantity: Math.min(99, Math.max(0, Math.floor(action.payload.quantity))) }
             : item
         )
         .filter((item) => item.quantity > 0);
@@ -51,10 +90,15 @@ export function CartProvider({ children }) {
   const [cart, dispatch] = useReducer(cartReducer, [], () => loadCart());
 
   useEffect(() => {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(cart));
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(cart));
+    } catch {
+      // Storage quota or disabled cookies protection
+    }
   }, [cart]);
 
   const addItem = (product, size) => {
+    if (!product || !product.id || !product.prices || !product.prices[size]) return;
     dispatch({
       type: 'ADD_ITEM',
       payload: {
@@ -62,7 +106,7 @@ export function CartProvider({ children }) {
         name: product.name,
         variant: product.variant,
         size,
-        price: product.prices[size],
+        price: product.prices[size], // Authoritative
         colorPrimary: product.colorPrimary,
       },
     });

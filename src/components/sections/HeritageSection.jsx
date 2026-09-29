@@ -83,6 +83,7 @@ export default function HeritageSection() {
               alt="Authentic South Indian artisanal filter coffee poured in traditional brass davara tumbler"
               className="w-full h-full object-cover object-center filter brightness-[0.88] contrast-[1.05]"
               loading="lazy"
+              decoding="async"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-espresso-950/85 via-espresso-950/35 to-transparent" />
             <div className="absolute bottom-6 left-6 sm:bottom-10 sm:left-10 text-cream max-w-lg">

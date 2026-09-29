@@ -39,7 +39,8 @@ function CollectionCard({ product, index }) {
           src={imageSrc}
           alt={`${product.name} — ${product.variant}`}
           className="h-full w-full object-contain filter drop-shadow-[0_20px_30px_rgba(0,0,0,0.7)] group-hover:scale-105 transition-transform duration-700 relative z-10"
-          loading="eager"
+          loading="lazy"
+          decoding="async"
         />
 
         {/* Subtle Accent Stripe at Bottom of Image Stage */}

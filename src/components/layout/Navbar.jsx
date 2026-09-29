@@ -16,8 +16,18 @@ export default function Navbar({ onCartOpen, hasAnnouncement = true }) {
   const { totalItems } = useCart();
 
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 25);
-    window.addEventListener('scroll', handleScroll);
+    let ticking = false;
+    const handleScroll = () => {
+      if (!ticking) {
+        ticking = true;
+        requestAnimationFrame(() => {
+          setScrolled(window.scrollY > 25);
+          ticking = false;
+        });
+      }
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
