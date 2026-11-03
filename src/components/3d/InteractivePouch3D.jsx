@@ -27,7 +27,7 @@ function createPouchTexture(product) {
   ctx.fillText('☕  Coffee with Difference.....  ☕', 512, 100);
 
   // Variant color main band (Upper-middle body)
-  const isWhitePouch = product.id === 'roasted-coffee-beans';
+  const isWhitePouch = product.id === 'roasted-coffee-beans' || product.id?.includes('coffee-beans');
   if (isWhitePouch) {
     ctx.fillStyle = '#F8F8F8';
     ctx.fillRect(0, 160, 1024, 864);

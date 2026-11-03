@@ -74,7 +74,7 @@ function CollectionCard({ product, index }) {
 
         <div>
           {/* Segmented Size Selector */}
-          <div className="grid grid-cols-4 gap-1.5 mb-6">
+          <div className={`grid gap-1.5 mb-6 ${sizes.length === 1 ? 'grid-cols-1' : 'grid-cols-4'}`}>
             {sizes.map((sz) => (
               <button
                 key={sz}
@@ -85,7 +85,7 @@ function CollectionCard({ product, index }) {
                     : 'bg-transparent text-espresso-700 border border-espresso-950/15 hover:border-espresso-950/30'
                 }`}
               >
-                {sz}
+                {sizes.length === 1 ? `${sz} Whole Beans Packaging` : sz}
               </button>
             ))}
           </div>
@@ -96,9 +96,16 @@ function CollectionCard({ product, index }) {
               <span className="text-[10px] uppercase font-mono text-espresso-500 block">
                 {selectedSize}
               </span>
-              <span className="font-display text-2xl font-bold text-espresso-900">
-                ₹{product.prices[selectedSize]}
-              </span>
+              <div className="flex items-baseline gap-1">
+                <span className="font-display text-2xl font-bold text-espresso-900">
+                  ₹{product.prices[selectedSize]}
+                </span>
+                {product.taxNote && (
+                  <span className="text-[11px] font-mono text-espresso-600 font-medium">
+                    {product.taxNote}
+                  </span>
+                )}
+              </div>
             </div>
 
             <button

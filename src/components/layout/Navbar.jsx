@@ -52,7 +52,7 @@ export default function Navbar({ onCartOpen, hasAnnouncement = false }) {
             </div>
             <div>
               <span className="block font-display text-base sm:text-lg font-bold tracking-tight text-cream group-hover:text-gold-brass transition-colors leading-none">
-                BROWN LABEL
+                BROWN LABEL COFFEE
               </span>
               <span className="block text-[9px] tracking-editorial text-cream/40 uppercase font-body mt-0.5">
                 Bengaluru · 43 Years of Heritage

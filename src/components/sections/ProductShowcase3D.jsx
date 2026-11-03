@@ -14,19 +14,19 @@ const sensoryProfiles = {
     character: 'Rich dark chocolate undertones with a thick, velvety crema head.',
     bestFor: 'Classic Tumbler & Davara Filter Coffee',
   },
-  'kafee-pudi-extra-strong': {
-    roastDesc: 'Dark Thermal Roast',
-    character: 'Intense smoky cocoa aroma designed for a commanding morning decoction.',
-    bestFor: 'Strong Morning Wake-Up Decoction',
-  },
   'kafee-pudi-premium-gold': {
     roastDesc: 'Artisanal Medium Roast',
     character: 'Wild blossom honey and toasted almond with zero bitterness.',
     bestFor: 'Pour-Over, Aeropress & Mild Filter',
   },
-  'roasted-coffee-beans': {
-    roastDesc: 'Hand-Selected Estate Whole Beans',
-    character: 'Crisp fruity brightness balanced by smooth roasted hazelnut finish.',
+  'pure-arabica-coffee-beans': {
+    roastDesc: 'Single-Origin Estate Arabica Whole Beans',
+    character: 'Crisp fruity brightness, floral aroma, and smooth caramel finish.',
+    bestFor: 'Home Grinding, Pour-Over & Aeropress',
+  },
+  'pure-robusta-coffee-beans': {
+    roastDesc: 'Shade-Grown Estate Robusta Whole Beans',
+    character: 'Heavy body, dense crema, dark cocoa, and roasted hazelnut.',
     bestFor: 'Home Grinding, Espresso & French Press',
   },
 };
@@ -52,7 +52,7 @@ export default function ProductShowcase3D() {
 
   const handleSelectProduct = (idx) => {
     setActiveProductIndex(idx);
-    if (products[idx].id === 'roasted-coffee-beans') {
+    if (products[idx].id?.includes('coffee-beans')) {
       setViewMode('bean');
     } else if (viewMode === 'bean') {
       setViewMode('pouch');

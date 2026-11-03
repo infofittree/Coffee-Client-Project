@@ -5,7 +5,7 @@ const AdminDataContext = createContext();
 
 const INQUIRIES_KEY = 'brownlabel-admin-inquiries-v1';
 const ORDERS_KEY = 'brownlabel-admin-orders-v1';
-const PRODUCTS_KEY = 'brownlabel-admin-products-v1';
+const PRODUCTS_KEY = 'brownlabel-admin-products-v2';
 
 const defaultInquiries = [
   {
@@ -82,9 +82,9 @@ const defaultOrders = [
     phone: '+91 98410 77665',
     location: 'T. Nagar, Chennai',
     items: [
-      { name: 'Kafee Pudi — Extra Strong', size: '500g', quantity: 3, price: 479 },
+      { name: 'Coffee Beans — 100% Pure Robusta', size: '400g', quantity: 2, price: 850 },
     ],
-    totalPrice: 1437,
+    totalPrice: 1700,
     status: 'Roasting',
     createdAt: new Date(Date.now() - 3600000 * 3).toISOString(), // 3 hrs ago
   },
@@ -94,9 +94,9 @@ const defaultOrders = [
     phone: '+91 98490 33221',
     location: 'Jubilee Hills, Hyderabad',
     items: [
-      { name: 'Roasted Coffee Beans', size: '1kg', quantity: 1, price: 1099 },
+      { name: 'Coffee Beans — 100% Pure Arabica', size: '400g', quantity: 1, price: 1200 },
     ],
-    totalPrice: 1099,
+    totalPrice: 1200,
     status: 'Dispatched',
     createdAt: new Date(Date.now() - 86400000 * 1).toISOString(), // 1 day ago
   },

@@ -318,7 +318,7 @@ export default function WholesaleB2BSection() {
                     <textarea
                       name="notes"
                       maxLength={1000}
-                      placeholder="e.g. Commercial South Indian Decoction urns, preference for Extra Strong roast profile, sample request for 2 Bangalore branches..."
+                      placeholder="e.g. Commercial South Indian Decoction urns, preference for 100% Pure Robusta or Ultra Rich roast profile, sample request for 2 Bangalore branches..."
                       value={formData.notes}
                       onChange={handleChange}
                       rows={3}

@@ -34,7 +34,7 @@ export const brewingGuides = [
       'Press the plunger down slowly and steadily.',
       'Pour immediately to avoid over-extraction.',
     ],
-    tips: 'Use the Extra Strong blend for a bold French press experience.',
+    tips: 'Use the 100% Pure Robusta whole beans for a bold French press experience.',
   },
   {
     id: 'cold-brew',

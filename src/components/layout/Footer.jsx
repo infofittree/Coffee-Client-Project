@@ -3,9 +3,9 @@ import { MapPin, Phone, Mail, ShieldCheck, MessageCircle } from 'lucide-react';
 const footerNavLinks = {
   'Our Blends': [
     { label: 'Kafee Pudi — Ultra Rich', href: '#products' },
-    { label: 'Kafee Pudi — Extra Strong', href: '#products' },
     { label: 'Kafee Pudi — Premium Gold', href: '#products' },
-    { label: 'Roasted Coffee Beans', href: '#products' },
+    { label: '100% Pure Arabica Coffee Beans', href: '#products' },
+    { label: '100% Pure Robusta Coffee Beans', href: '#products' },
   ],
   'The Roastery': [
     { label: 'Our Story (Since 1984)', href: '#heritage' },

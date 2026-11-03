@@ -19,8 +19,8 @@ const testimonials = [
     location: 'T. Nagar, Chennai',
     role: 'Heritage Cafe Proprietor',
     quote:
-      'Running a traditional South Indian filter coffee outlet means our patrons notice even the slightest shift in decoction density. Brown Label Extra Strong yields that dense, golden-caramel crema head consistently with every single batch.',
-    product: 'Kafee Pudi — Extra Strong',
+      'Running a traditional South Indian filter coffee outlet means our patrons notice even the slightest shift in decoction density. Brown Label 100% Pure Robusta whole beans yield that dense, golden-caramel crema head consistently with every single batch.',
+    product: '100% Pure Robusta Coffee Beans',
     stars: 5,
   },
   {
