@@ -10,7 +10,7 @@ const navLinks = [
   { label: 'Wholesale', href: '#wholesale' },
 ];
 
-export default function Navbar({ onCartOpen, hasAnnouncement = true }) {
+export default function Navbar({ onCartOpen, hasAnnouncement = false }) {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const { totalItems } = useCart();
@@ -33,9 +33,7 @@ export default function Navbar({ onCartOpen, hasAnnouncement = true }) {
 
   return (
     <header
-      className={`fixed left-0 right-0 z-50 transition-all duration-500 ${
-        hasAnnouncement && !scrolled ? 'top-[33px]' : 'top-0'
-      } ${
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
         scrolled
           ? 'bg-espresso-950/92 backdrop-blur-md hairline-b py-3.5'
           : 'bg-transparent py-6'

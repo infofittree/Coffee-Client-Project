@@ -1,7 +1,6 @@
 import { useState, useEffect, lazy, Suspense } from 'react';
 import { CartProvider } from './context/CartContext';
 import { AdminDataProvider } from './context/AdminDataContext';
-import AnnouncementBar from './components/layout/AnnouncementBar';
 import Navbar from './components/layout/Navbar';
 import HeroSection from './components/sections/HeroSection';
 import ScrollRevealStatement from './components/sections/ScrollRevealStatement';
@@ -39,7 +38,6 @@ export default function App() {
 
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isWhatsAppModalOpen, setIsWhatsAppModalOpen] = useState(false);
-  const [hasAnnouncement, setHasAnnouncement] = useState(true);
 
   useEffect(() => {
     const handleHashChange = () => {
@@ -83,14 +81,8 @@ export default function App() {
           )
         ) : (
           <div className="min-h-screen bg-espresso-950 text-cream flex flex-col font-body selection:bg-gold/30 selection:text-white">
-            {/* Top Announcement Bar */}
-            <AnnouncementBar onDismiss={() => setHasAnnouncement(false)} />
-
-            {/* Floating Navbar with dynamic top positioning */}
-            <Navbar
-              onCartOpen={() => setIsCartOpen(true)}
-              hasAnnouncement={hasAnnouncement}
-            />
+            {/* Floating Navbar */}
+            <Navbar onCartOpen={() => setIsCartOpen(true)} />
 
             {/* Main Content Sections */}
             <main className="flex-1">
