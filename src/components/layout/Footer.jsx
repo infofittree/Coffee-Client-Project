@@ -64,7 +64,7 @@ export default function Footer() {
             </div>
 
             <p className="text-cream/70 text-sm leading-relaxed max-w-sm font-body font-light">
-              Artisanal drum-roasted South Indian filter coffee and whole beans, shade-grown and estate-sourced from Coorg and Chikmagalur.
+              Artisanal unique air-roasted coffee beans and South Indian filter coffee, shade-grown and estate-sourced from Coorg and Chikmagalur.
             </p>
 
             <div className="pt-1">

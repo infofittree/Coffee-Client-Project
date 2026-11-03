@@ -49,7 +49,7 @@ export default function HeritageSection() {
             </h2>
             <div className="space-y-5 text-espresso-700 text-sm sm:text-base leading-relaxed font-light">
               <p>
-                Founded in 1984 on Bannerghatta Road in Bengaluru, Brown Label Coffee has spent 43 continuous years mastering South Indian filter coffee. While mass markets turned to automated bulk roasting and excessive chicory fillers, our master roasters preserved the delicate art of drum roasting.
+                Founded in 1984 on Bannerghatta Road in Bengaluru, Brown Label Coffee has spent 43 continuous years mastering South Indian filter coffee. While mass markets turned to automated bulk roasting and excessive chicory fillers, our master roasters dedicated themselves to crafting unique air-roasted coffee beans.
               </p>
               <p>
                 Every single batch is calibrated by ambient monsoon humidity and bean density. By slowly caramelizing the natural bean sugars at a controlled 210°C, we capture the heavy body and sweet chocolate aroma that defines the iconic South Indian morning cup.
