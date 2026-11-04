@@ -138,10 +138,6 @@ export default function CartDrawer({ isOpen, onClose, onWhatsAppCheckout }) {
                   </div>
                 </div>
 
-                <p className="text-[11px] text-cream/50">
-                  ✦ Orders above ₹599 qualify for Free Pan-India Delivery.
-                </p>
-
                 <button
                   onClick={onWhatsAppCheckout}
                   className="w-full bg-gradient-to-r from-emerald-600 to-emerald-500 hover:from-emerald-500 hover:to-emerald-400 text-white font-bold py-3.5 px-6 rounded-full flex items-center justify-center gap-2 transition-all shadow-luxury-forest text-xs uppercase tracking-wider"
