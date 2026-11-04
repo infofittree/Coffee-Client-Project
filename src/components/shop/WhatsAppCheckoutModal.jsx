@@ -13,12 +13,12 @@ export default function WhatsAppCheckoutModal({ isOpen, onClose }) {
 
   const taxLine = taxAmount > 0 ? `\nTaxes (5% GST): ₹${taxAmount}` : '';
 
-  const message = `Hi Brown Label Coffee! ☕🫘\n\nI'd like to place an order:\n\n${cart
+  const message = `Hi Brown Label Coffee!\n\nI'd like to place an order:\n\n${cart
     .map(
       (item) =>
         `• ${item.name} — ${item.variant} (${item.size}) x${item.quantity} = ₹${item.price * item.quantity}`
     )
-    .join('\n')}\n\nSubtotal: ₹${subtotalPrice}${taxLine}\n*Total Amount: ₹${totalPrice}*\n\nPlease confirm availability and share payment / shipping details. Thank you! 🙏`;
+    .join('\n')}\n\nSubtotal: ₹${subtotalPrice}${taxLine}\n*Total Amount: ₹${totalPrice}*\n\nPlease confirm availability and share payment / shipping details. Thank you!`;
 
   const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
 
