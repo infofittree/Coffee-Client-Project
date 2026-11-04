@@ -3,7 +3,7 @@ import { X, Plus, Minus, Trash2, ShoppingBag, ArrowRight } from 'lucide-react';
 import { useCart } from '../../context/CartContext';
 
 export default function CartDrawer({ isOpen, onClose, onWhatsAppCheckout }) {
-  const { cart, removeItem, updateQuantity, totalItems, totalPrice, clearCart } = useCart();
+  const { cart, removeItem, updateQuantity, totalItems, subtotalPrice, taxAmount, totalPrice, clearCart } = useCart();
 
   return (
     <AnimatePresence>
@@ -119,9 +119,23 @@ export default function CartDrawer({ isOpen, onClose, onWhatsAppCheckout }) {
             {/* Subtotal & Checkout Footer */}
             {cart.length > 0 && (
               <div className="p-6 border-t border-white/10 bg-espresso-900/60 space-y-4">
-                <div className="flex items-center justify-between">
-                  <span className="text-cream/60 text-xs uppercase tracking-wider font-mono">Estimated Subtotal</span>
-                  <span className="text-2xl font-display font-bold text-gold font-mono">₹{totalPrice}</span>
+                <div className="space-y-2 border-b border-white/10 pb-3">
+                  <div className="flex items-center justify-between text-xs">
+                    <span className="text-cream/60 uppercase tracking-wider font-mono">Bag Subtotal</span>
+                    <span className="text-cream font-mono font-medium">₹{subtotalPrice}</span>
+                  </div>
+                  {taxAmount > 0 && (
+                    <div className="flex items-center justify-between text-xs">
+                      <span className="text-cream/60 uppercase tracking-wider font-mono">
+                        Applicable Taxes (5% GST)
+                      </span>
+                      <span className="text-gold font-mono font-medium">+ ₹{taxAmount}</span>
+                    </div>
+                  )}
+                  <div className="flex items-center justify-between pt-1">
+                    <span className="text-cream/80 text-xs uppercase tracking-wider font-mono font-semibold">Total Amount</span>
+                    <span className="text-2xl font-display font-bold text-gold font-mono">₹{totalPrice}</span>
+                  </div>
                 </div>
 
                 <p className="text-[11px] text-cream/50">

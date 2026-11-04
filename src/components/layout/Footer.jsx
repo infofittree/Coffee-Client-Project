@@ -156,7 +156,7 @@ export default function Footer() {
               {/* WhatsApp Quick Order Button */}
               <div className="pt-2">
                 <a
-                  href="https://wa.me/918026684573?text=Hi%20Brown%20Label%20Coffee!%20I'd%20like%20to%20inquire%20about%20ordering%20coffee."
+                  href="https://wa.me/919081751379?text=Hi%20Brown%20Label%20Coffee!%20I'd%20like%20to%20inquire%20about%20ordering%20coffee."
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-600/20 border border-emerald-500/30 text-emerald-300 hover:bg-emerald-600/30 hover:text-emerald-200 text-xs font-semibold tracking-wide transition-all font-body shadow-xs"

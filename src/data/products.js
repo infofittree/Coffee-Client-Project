@@ -47,7 +47,7 @@ export const products = [
     colorAccent: '#FFFDF9',
     image: '/images/roasted-beans.jpeg',
     prices: { '400g': 1200 },
-    taxNote: '+ taxes',
+    taxRate: 0.05,
     badge: '100% Arabica',
     inStock: true,
   },

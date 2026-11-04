@@ -96,15 +96,10 @@ function CollectionCard({ product, index }) {
               <span className="text-[10px] uppercase font-mono text-espresso-500 block">
                 {selectedSize}
               </span>
-              <div className="flex items-baseline gap-1">
+              <div className="flex items-baseline">
                 <span className="font-display text-2xl font-bold text-espresso-900">
                   ₹{product.prices[selectedSize]}
                 </span>
-                {product.taxNote && (
-                  <span className="text-[11px] font-mono text-espresso-600 font-medium">
-                    {product.taxNote}
-                  </span>
-                )}
               </div>
             </div>
 

@@ -33,6 +33,7 @@ function sanitizeAndHydrateCart(rawItems) {
       variant: authoritativeProduct.variant,
       size: item.size,
       price: authoritativePrice, // Always authoritative
+      taxRate: authoritativeProduct.taxRate || 0,
       colorPrimary: authoritativeProduct.colorPrimary,
       quantity: safeQuantity,
     });
@@ -107,6 +108,7 @@ export function CartProvider({ children }) {
         variant: product.variant,
         size,
         price: product.prices[size], // Authoritative
+        taxRate: product.taxRate || 0,
         colorPrimary: product.colorPrimary,
       },
     });
@@ -123,11 +125,25 @@ export function CartProvider({ children }) {
   const clearCart = () => dispatch({ type: 'CLEAR_CART' });
 
   const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
-  const totalPrice = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  const subtotalPrice = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  const taxAmount = Math.round(
+    cart.reduce((sum, item) => sum + (item.taxRate || 0) * (item.price * item.quantity), 0)
+  );
+  const totalPrice = subtotalPrice + taxAmount;
 
   return (
     <CartContext.Provider
-      value={{ cart, addItem, removeItem, updateQuantity, clearCart, totalItems, totalPrice }}
+      value={{
+        cart,
+        addItem,
+        removeItem,
+        updateQuantity,
+        clearCart,
+        totalItems,
+        subtotalPrice,
+        taxAmount,
+        totalPrice,
+      }}
     >
       {children}
     </CartContext.Provider>

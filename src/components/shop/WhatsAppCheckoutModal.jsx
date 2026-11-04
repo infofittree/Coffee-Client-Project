@@ -5,18 +5,20 @@ import { useCart } from '../../context/CartContext';
 import { useAdminData } from '../../context/AdminDataContext';
 
 export default function WhatsAppCheckoutModal({ isOpen, onClose }) {
-  const { cart, totalPrice } = useCart();
+  const { cart, subtotalPrice, taxAmount, totalPrice } = useCart();
   const { addOrder } = useAdminData();
   const [copied, setCopied] = useState(false);
 
-  const phoneNumber = '918026684573';
+  const phoneNumber = '919081751379';
+
+  const taxLine = taxAmount > 0 ? `\nTaxes (5% GST): ₹${taxAmount}` : '';
 
   const message = `Hi Brown Label Coffee! ☕🫘\n\nI'd like to place an order:\n\n${cart
     .map(
       (item) =>
         `• ${item.name} — ${item.variant} (${item.size}) x${item.quantity} = ₹${item.price * item.quantity}`
     )
-    .join('\n')}\n\n*Total Amount: ₹${totalPrice}*\n\nPlease confirm availability and share payment / shipping details. Thank you! 🙏`;
+    .join('\n')}\n\nSubtotal: ₹${subtotalPrice}${taxLine}\n*Total Amount: ₹${totalPrice}*\n\nPlease confirm availability and share payment / shipping details. Thank you! 🙏`;
 
   const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
 
@@ -70,7 +72,7 @@ export default function WhatsAppCheckoutModal({ isOpen, onClose }) {
                 </div>
                 <div>
                   <h3 className="font-display text-lg font-bold text-cream">Direct Roastery WhatsApp Order</h3>
-                  <span className="text-xs text-emerald-400 font-mono">Official Line: +91 80 2668 4573</span>
+                  <span className="text-xs text-emerald-400 font-mono">Test Order Line: +91 90817 51379</span>
                 </div>
               </div>
               <button
