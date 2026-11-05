@@ -5,7 +5,7 @@ const AdminDataContext = createContext();
 
 const INQUIRIES_KEY = 'brownlabel-admin-inquiries-v1';
 const ORDERS_KEY = 'brownlabel-admin-orders-v1';
-const PRODUCTS_KEY = 'brownlabel-admin-products-v2';
+const PRODUCTS_KEY = 'brownlabel-admin-products-v3';
 
 const defaultInquiries = [
   {

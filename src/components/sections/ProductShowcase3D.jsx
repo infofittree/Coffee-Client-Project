@@ -33,7 +33,7 @@ const sensoryProfiles = {
 
 export default function ProductShowcase3D() {
   const [activeProductIndex, setActiveProductIndex] = useState(0);
-  const [selectedSize, setSelectedSize] = useState('400g');
+  const [selectedSize, setSelectedSize] = useState('200g');
   const [viewMode, setViewMode] = useState('pouch'); // 'pouch', 'bean', 'cup'
   const [added, setAdded] = useState(false);
   const { addItem } = useCart();
@@ -240,7 +240,7 @@ export default function ProductShowcase3D() {
                   <span className="text-[10px] uppercase tracking-editorial font-semibold text-cream/50 block mb-2">
                     Select Size
                   </span>
-                  <div className="grid grid-cols-4 gap-2">
+                  <div className={`grid gap-2 ${sizes.length === 1 ? 'grid-cols-1' : sizes.length === 2 ? 'grid-cols-2' : 'grid-cols-4'}`}>
                     {sizes.map((sz) => (
                       <button
                         key={sz}

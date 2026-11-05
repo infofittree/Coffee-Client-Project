@@ -74,7 +74,7 @@ function CollectionCard({ product, index }) {
 
         <div>
           {/* Segmented Size Selector */}
-          <div className={`grid gap-1.5 mb-6 ${sizes.length === 1 ? 'grid-cols-1' : 'grid-cols-4'}`}>
+          <div className={`grid gap-1.5 mb-6 ${sizes.length === 1 ? 'grid-cols-1' : sizes.length === 2 ? 'grid-cols-2' : 'grid-cols-4'}`}>
             {sizes.map((sz) => (
               <button
                 key={sz}
