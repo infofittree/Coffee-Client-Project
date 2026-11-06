@@ -15,7 +15,7 @@ export default function CartDrawer({ isOpen, onClose, onWhatsAppCheckout }) {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={onClose}
-            className="fixed inset-0 bg-espresso-950/80 backdrop-blur-md z-50"
+            className="fixed inset-0 bg-espresso-950/85 z-50"
           />
 
           {/* Luxury Sliding Drawer */}
@@ -25,7 +25,7 @@ export default function CartDrawer({ isOpen, onClose, onWhatsAppCheckout }) {
             animate={{ x: 0 }}
             exit={{ x: '100%' }}
             transition={{ type: 'spring', damping: 28, stiffness: 260 }}
-            className="fixed right-0 top-0 bottom-0 w-full max-w-md bg-espresso-950/98 backdrop-blur-2xl z-50 shadow-2xl border-l border-white/10 flex flex-col text-cream"
+            className="fixed right-0 top-0 bottom-0 w-full max-w-md bg-espresso-950 z-50 shadow-2xl border-l border-white/10 flex flex-col text-cream"
           >
             {/* Header */}
             <div className="flex items-center justify-between p-6 border-b border-white/10">

@@ -11,7 +11,7 @@ const stats = [
   { value: '210°C', label: 'Precision Roasting' },
 ];
 
-export default function HeroSection() {
+export default function HeroSection({ isPaused = false }) {
   return (
     <section
       id="home"
@@ -72,7 +72,7 @@ export default function HeroSection() {
             {/* Soft Warm Pedestal Glow */}
             <div className="absolute inset-0 bg-radial from-amber-600/10 via-transparent to-transparent blur-2xl pointer-events-none" />
 
-            <SceneContainer camera={{ position: [0, 0, 4.6], fov: 40 }}>
+            <SceneContainer camera={{ position: [0, 0, 4.6], fov: 40 }} isPaused={isPaused}>
               <ScrollCoffeeBean />
               <FloatingBeansParticles count={6} />
             </SceneContainer>

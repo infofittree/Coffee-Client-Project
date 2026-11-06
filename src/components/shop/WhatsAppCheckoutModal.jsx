@@ -1,6 +1,6 @@
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, MessageCircle, Copy, ExternalLink, Check, MapPin, User, AlertCircle } from 'lucide-react';
-import { useState } from 'react';
+import { X, MessageCircle, Copy, ExternalLink, Check, MapPin, User, AlertCircle, ShoppingBag } from 'lucide-react';
+import { useState, useMemo, useCallback } from 'react';
 import { useCart } from '../../context/CartContext';
 import { useAdminData } from '../../context/AdminDataContext';
 
@@ -33,18 +33,24 @@ export default function WhatsAppCheckoutModal({ isOpen, onClose }) {
 
   const phoneNumber = '919081751379';
 
-  const taxLine = taxAmount > 0 ? `\nTaxes (5% GST): ₹${taxAmount}` : '';
+  // Memoize static cart text so it doesn't recalculate on every keystroke
+  const cartSummaryText = useMemo(() => {
+    const taxLine = taxAmount > 0 ? `\nTaxes (5% GST): ₹${taxAmount}` : '';
+    return `${cart
+      .map(
+        (item) =>
+          `• ${item.name} — ${item.variant} (${item.size}) x${item.quantity} = ₹${item.price * item.quantity}`
+      )
+      .join('\n')}\n\nSubtotal: ₹${subtotalPrice}${taxLine}\n*Total Amount: ₹${totalPrice}*`;
+  }, [cart, subtotalPrice, taxAmount, totalPrice]);
 
-  const deliveryDetailsText = `\n\n📍 Delivery Location:\n• Address: ${address.trim() || '[Address to be confirmed]'}\n• PIN Code: ${pincode.trim() || '[PIN Code to be confirmed]'}${name.trim() ? `\n• Customer: ${name.trim()}` : ''}`;
+  const totalItems = useMemo(() => cart.reduce((sum, item) => sum + item.quantity, 0), [cart]);
 
-  const message = `Hi Brown Label Coffee!\n\nI'd like to place an order:\n\n${cart
-    .map(
-      (item) =>
-        `• ${item.name} — ${item.variant} (${item.size}) x${item.quantity} = ₹${item.price * item.quantity}`
-    )
-    .join('\n')}\n\nSubtotal: ₹${subtotalPrice}${taxLine}\n*Total Amount: ₹${totalPrice}*${deliveryDetailsText}\n\nPlease confirm delivery availability at my location and share payment details. Thank you!`;
-
-  const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+  // Construct complete WhatsApp message on-demand only when sending or copying
+  const getFullMessage = useCallback(() => {
+    const deliveryDetails = `\n\n📍 Delivery Location:\n• Address: ${address.trim()}\n• PIN Code: ${pincode.trim()}${name.trim() ? `\n• Customer: ${name.trim()}` : ''}`;
+    return `Hi Brown Label Coffee!\n\nI'd like to place an order:\n\n${cartSummaryText}${deliveryDetails}\n\nPlease confirm delivery availability at my location and share payment details. Thank you!`;
+  }, [cartSummaryText, address, pincode, name]);
 
   const validateAndSave = () => {
     if (!address.trim() || !pincode.trim()) {
@@ -80,16 +86,17 @@ export default function WhatsAppCheckoutModal({ isOpen, onClose }) {
     return true;
   };
 
-  const handleSendOrder = (e) => {
-    if (!validateAndSave()) {
-      e.preventDefault();
-      return;
-    }
+  const handleLaunchWhatsApp = () => {
+    if (!validateAndSave()) return;
+    const finalMessage = getFullMessage();
+    const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(finalMessage)}`;
+    window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
   };
 
   const handleCopy = () => {
     if (!validateAndSave()) return;
-    navigator.clipboard.writeText(message);
+    const finalMessage = getFullMessage();
+    navigator.clipboard.writeText(finalMessage);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
@@ -98,20 +105,21 @@ export default function WhatsAppCheckoutModal({ isOpen, onClose }) {
     <AnimatePresence>
       {isOpen && (
         <div className="fixed inset-0 z-[60] flex items-center justify-center p-3 sm:p-4 overflow-y-auto">
-          {/* Backdrop */}
+          {/* Lightweight high-performance solid backdrop (no GPU-heavy backdrop-blur) */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={onClose}
-            className="fixed inset-0 bg-espresso-950/80 backdrop-blur-md"
+            className="fixed inset-0 bg-espresso-950/92"
           />
 
-          {/* Modal Card */}
+          {/* Modal Card with CSS isolation */}
           <motion.div
             initial={{ opacity: 0, scale: 0.95, y: 15 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 15 }}
+            style={{ contain: 'paint' }}
             className="relative w-full max-w-lg max-h-[92vh] flex flex-col bg-espresso-950 border border-caramel/30 rounded-3xl shadow-luxury overflow-hidden text-cream z-10"
           >
             {/* Header */}
@@ -130,6 +138,7 @@ export default function WhatsAppCheckoutModal({ isOpen, onClose }) {
                 </div>
               </div>
               <button
+                type="button"
                 onClick={onClose}
                 className="text-cream/60 hover:text-cream p-1.5 rounded-full hover:bg-white/10 shrink-0"
                 aria-label="Close modal"
@@ -153,7 +162,7 @@ export default function WhatsAppCheckoutModal({ isOpen, onClose }) {
                 <div className="space-y-2">
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                     <div className="relative">
-                      <User className="w-3.5 h-3.5 text-cream/40 absolute left-3 top-1/2 -translate-y-1/2" />
+                      <User className="w-3.5 h-3.5 text-cream/40 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
                       <input
                         type="text"
                         value={name}
@@ -204,33 +213,51 @@ export default function WhatsAppCheckoutModal({ isOpen, onClose }) {
                 )}
               </div>
 
-              {/* Message Preview */}
-              <div>
-                <p className="text-cream/60 text-[11px] mb-2 font-mono uppercase tracking-wider">
-                  Structured WhatsApp Dispatch Note:
-                </p>
-                <div className="bg-espresso-900/90 border border-white/10 rounded-2xl p-3.5 text-xs text-cream/80 whitespace-pre-line max-h-36 sm:max-h-40 overflow-y-auto font-mono leading-relaxed">
-                  {message}
+              {/* Lightweight Order Items & Location Card */}
+              <div className="bg-espresso-900/90 border border-white/10 rounded-2xl p-4 text-xs font-mono leading-relaxed space-y-2.5">
+                <div className="flex items-center justify-between pb-2 border-b border-white/10">
+                  <span className="text-cream/80 uppercase tracking-wider text-[11px] font-semibold flex items-center gap-1.5">
+                    <ShoppingBag className="w-3.5 h-3.5 text-gold" />
+                    Order Summary ({totalItems} items)
+                  </span>
+                  <span className="text-gold font-bold text-sm">₹{totalPrice}</span>
+                </div>
+
+                <div className="text-[11px] text-cream/70 space-y-1 max-h-24 overflow-y-auto pr-1">
+                  {cart.map((item) => (
+                    <div key={`${item.id}-${item.size}`} className="flex justify-between items-center py-0.5">
+                      <span className="truncate pr-2">• {item.name} — {item.variant} ({item.size}) ×{item.quantity}</span>
+                      <span className="shrink-0 text-cream/90 font-medium">₹{item.price * item.quantity}</span>
+                    </div>
+                  ))}
+                </div>
+
+                <div className="pt-2 border-t border-white/10 flex items-center justify-between text-[11px]">
+                  <span className="text-cream/50 flex items-center gap-1">
+                    <MapPin className="w-3 h-3 text-emerald-400 shrink-0" />
+                    Delivery Destination:
+                  </span>
+                  <span className="text-emerald-400 font-semibold font-mono">
+                    {pincode ? `PIN: ${pincode}` : 'PIN Required'}
+                  </span>
                 </div>
               </div>
 
               {/* Action Buttons */}
               <div className="space-y-2.5 pt-1 mt-auto">
-                <a
-                  href={whatsappUrl}
-                  onClick={handleSendOrder}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <button
+                  type="button"
+                  onClick={handleLaunchWhatsApp}
                   className="w-full bg-gradient-to-r from-emerald-600 to-emerald-500 hover:from-emerald-500 hover:to-emerald-400 text-white font-bold py-3 sm:py-3.5 px-6 rounded-full flex items-center justify-center gap-2 transition-all shadow-luxury-forest text-xs uppercase tracking-wider cursor-pointer"
                 >
                   <ExternalLink className="w-4 h-4" />
                   <span>Launch WhatsApp & Send Order</span>
-                </a>
+                </button>
 
                 <button
                   type="button"
                   onClick={handleCopy}
-                  className="w-full bg-white/5 hover:bg-white/10 border border-white/10 text-cream font-medium py-2.5 sm:py-3 rounded-full flex items-center justify-center gap-2 transition-colors text-xs"
+                  className="w-full bg-white/5 hover:bg-white/10 border border-white/10 text-cream font-medium py-2.5 sm:py-3 rounded-full flex items-center justify-center gap-2 transition-colors text-xs cursor-pointer"
                 >
                   {copied ? <Check className="w-4 h-4 text-emerald-400" /> : <Copy className="w-4 h-4 text-gold" />}
                   <span>{copied ? 'Order Text Copied to Clipboard!' : 'Copy Order Text to Clipboard'}</span>
